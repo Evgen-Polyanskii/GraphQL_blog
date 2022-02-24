@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const { ApolloServer } = require('apollo-server');
+const { Sequelize } = require('sequelize');
 const path = require('path');
 const dotenv = require('dotenv');
 
