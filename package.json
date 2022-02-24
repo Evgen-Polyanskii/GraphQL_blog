@@ -1,0 +1,48 @@
+{
+  "name": "volt_blog",
+  "version": "0.0.1",
+  "description": "Тестовое задание Volt",
+  "main": "server/bin/server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "NODE_ENV=production node server/bin/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evgen-Polyanskii/testTask_volt_blog.git"
+  },
+  "author": "Evgen-Polyanskii",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Evgen-Polyanskii/testTask_volt_blog/issues"
+  },
+  "homepage": "https://github.com/Evgen-Polyanskii/testTask_volt_blog#readme",
+  "dependencies": {
+    "apollo-datasource": "^3.3.1",
+    "apollo-server": "^3.6.3",
+    "bootstrap": "^5.0.1",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^10.0.0",
+    "graphql": "^16.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.16.1",
+    "sqlite3": "^5.0.2",
+    "validator": "^13.7.0",
+    "@faker-js/faker": "^6.0.0-alpha.7"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "eslint": "^8.9.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-chai-friendly": "^0.7.2",
+    "eslint-plugin-mocha": "^10.0.3",
+    "mocha": "^9.2.1",
+    "nodemon": "^2.0.15",
+    "sequelize-cli": "^6.4.1"
+  }
+}
