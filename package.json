@@ -9,7 +9,7 @@
     "db-migrate": "npx sequelize-cli db:migrate",
     "data-load": "npx sequelize-cli db:seed:all",
     "build": "npm run build-db && npm run db-migrate && npm run data-load",
-    "start": "npm run build $$ NODE_ENV=production node server/bin/server.js"
+    "start": "npm run build && NODE_ENV=production node server/bin/server.js"
   },
   "repository": {
     "type": "git",
