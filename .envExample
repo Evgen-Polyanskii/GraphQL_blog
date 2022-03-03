@@ -1,0 +1,11 @@
+DB_USERNAME=bloger
+DB_PASSWORD=lfofkff
+DB_NAME=volt_blog
+DB_HOSTNAME=127.0.0.1
+SESSION_KEY=hdjdkjdf1djfasnfdq
+DATABASE_URL=postgres://tueefpcnxqyvkf:39ffggec2-63-34-223-144.ru-south-3.compute.amazonaws.com:5432/d4ldfasg39ggi
+AWS_SECRET_ACCESS_KEY=CTfdsagdfsgfdga
+AWS_ACCESS_KEY_ID=sdffgafgafdghgj
+AWS_REGION=ru-south-3
+TRANSPORTER_AUTH_USER=example
+TRANSPORTER_AUTH_PASS=pqoirbn437472439bdfbdn

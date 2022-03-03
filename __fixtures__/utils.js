@@ -5,7 +5,7 @@ const setContext = (context, user) => {
     value.initialize({
       context: {
         user: {
-          userId: user.dataValues.id,
+          id: user.dataValues.id,
           nickname: user.dataValues.nickname,
           email: user.dataValues.email,
         },

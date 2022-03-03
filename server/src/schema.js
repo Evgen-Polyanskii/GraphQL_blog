@@ -1,6 +1,9 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  scalar Upload
+  scalar Date
+  
   type AuthToken {
     token: String!
   }
@@ -8,7 +11,7 @@ const typeDefs = gql`
   type Post {
     title: String!
     body: String!
-    published_at: String! 
+    published_at: Date! 
   }
   
   type PostsList {
@@ -22,7 +25,7 @@ const typeDefs = gql`
     id: Int!
     title: String!
     body: String!
-    published_at: String!
+    published_at: Date!
     authorsNickname: String!
   }
   
@@ -44,16 +47,26 @@ const typeDefs = gql`
     body: String!
     postId: Int!
     authorsNickname: String!
-    published_at: String!
+    published_at: Date!
+  }
+  
+  type uploadResult {
+    message: String!
+  }
+  
+  type reportMessage {
+    message: String!
   }
   
   type Query {
     getPostById(id: Int!): Post
     getPostsList(page: Int, perPage: Int): PostsList
-    getUserComments(userId: Int!, page: Int, perPage: Int): CommentsList
+    getUserComments(page: Int, perPage: Int): CommentsList
+    getAnalyticalReport(startDate: Date!, endDate: Date!, email: String!): reportMessage
   }
   
   type Mutation {
+    singleUpload(file: Upload!): uploadResult!
     signup(nickname: String!, email: String!, password: String!): AuthToken!
     login(email: String!, password: String!): AuthToken!
     createPost(title: String!, body: String!, published_at: String): PostInfo

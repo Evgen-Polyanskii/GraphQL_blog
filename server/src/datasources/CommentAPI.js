@@ -1,8 +1,6 @@
 const { DataSource } = require('apollo-datasource');
 const lodash = require('lodash');
 
-const { getDate } = require('../../lib/utilities.js');
-
 class CommentAPI extends DataSource {
   constructor(store) {
     super();
@@ -20,23 +18,21 @@ class CommentAPI extends DataSource {
     const newComment = await this.store.Comment.create({
       body,
       post_id: postId,
-      author_id: this.context.user.userId,
+      author_id: this.context.user.id,
     });
-    const publicationDate = getDate(newComment.dataValues.published_at);
     return {
       ...lodash.omit(newComment.dataValues, ['author_id', 'post_id']),
       postId,
-      published_at: publicationDate,
       authorsNickname: this.context.user.nickname,
     };
   }
 
-  async getUserCommentsWithPagination({ userId, page = 1, perPage = 5 }, options = {}) {
+  async getUserCommentsWithPagination({ page = 1, perPage = 5 }, options = {}) {
     const { count, rows } = await this.store.Comment.findAndCountAll({
-      where: { author_id: userId },
+      where: { author_id: this.context.user.id },
       ...options,
       include: [{
-        model: this.store.Post, as: 'post', foreignKey: 'post_id', attributes: ['title'],
+        model: this.store.Post, as: 'post', attributes: ['title'],
       }],
       offset: perPage * page - perPage,
       limit: perPage,
@@ -44,7 +40,6 @@ class CommentAPI extends DataSource {
     const comments = rows.map(({ dataValues }) => ({
       ...dataValues,
       post: dataValues.post.dataValues.title,
-      published_at: getDate(dataValues.published_at),
     }));
     return {
       comments,

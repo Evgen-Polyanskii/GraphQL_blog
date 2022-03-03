@@ -1,3 +1,5 @@
+const { ForbiddenError } = require('apollo-server');
+const { skip } = require('graphql-resolvers');
 const crypto = require('crypto');
 const path = require('path');
 const jwt = require('jsonwebtoken');
@@ -19,7 +21,7 @@ const generateToken = (payload) => {
   return { token };
 };
 
-const isAuth = ({ req }) => {
+const getUser = ({ req }) => {
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     const token = req.headers.authorization.split(' ')[1];
     const user = jwt.verify(token, signature);
@@ -28,4 +30,8 @@ const isAuth = ({ req }) => {
   return null;
 };
 
-module.exports = { encrypt, generateToken, isAuth };
+const isAuthenticated = (parent, args, { user }) => (user ? skip : new ForbiddenError('Not authenticated as user.'));
+
+module.exports = {
+  encrypt, generateToken, getUser, isAuthenticated,
+};

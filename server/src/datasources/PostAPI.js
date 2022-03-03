@@ -1,8 +1,6 @@
 const { DataSource } = require('apollo-datasource');
 const lodash = require('lodash');
 
-const { getDate } = require('../../lib/utilities.js');
-
 class PostAPI extends DataSource {
   constructor(store) {
     super();
@@ -18,20 +16,17 @@ class PostAPI extends DataSource {
     const newPost = await this.store.Post.create({
       title,
       body,
-      author_id: this.context.user.userId,
+      author_id: this.context.user.id,
     });
-    const publicationDate = getDate(newPost.dataValues.published_at);
     return {
       ...lodash.omit(newPost.dataValues, 'author_id'),
-      published_at: publicationDate,
       authorsNickname: this.context.user.nickname,
     };
   }
 
   async findPostById(id, options = {}) {
     const post = await this.store.Post.findByPk(id, options);
-    return post
-      ? { ...post.dataValues, published_at: getDate(post.dataValues.published_at) } : null;
+    return post ? post.dataValues : null;
   }
 
   async getPostsWithPagination({ page = 1, perPage = 5 }, options = {}) {
@@ -40,10 +35,7 @@ class PostAPI extends DataSource {
       offset: perPage * page - perPage,
       limit: perPage,
     });
-    const posts = rows.map(({ dataValues }) => ({
-      ...dataValues,
-      published_at: getDate(dataValues.published_at),
-    }));
+    const posts = rows.map(({ dataValues }) => dataValues);
     return {
       posts,
       totalPosts: count,

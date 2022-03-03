@@ -20,11 +20,6 @@ let context;
 let userData;
 let postData;
 let commentData;
-const dataSources = () => ({
-  postAPI: new PostAPI(db),
-  userAPI: new UserAPI(db),
-  commentAPI: new CommentAPI(db),
-});
 
 describe('positive cases', () => {
   let user;
@@ -33,7 +28,13 @@ describe('positive cases', () => {
     userData = getUser();
     postData = getPost();
     commentData = getComment();
-    context = { dataSources: dataSources() };
+    context = {
+      dataSources: {
+        postAPI: new PostAPI(db),
+        userAPI: new UserAPI(db),
+        commentAPI: new CommentAPI(db),
+      },
+    };
   });
 
   beforeEach(async () => {
@@ -100,7 +101,7 @@ describe('Negative cases', () => {
       await Mutation.login(null, { email: newUserData.email, password: 'qwerty' }, context);
     } catch (err) {
       err.should.be.a.Throw;
-      err.message.should.be.a.equal('Incorrect password');
+      err.message.should.be.a.equal('Invalid password.');
     }
   });
 

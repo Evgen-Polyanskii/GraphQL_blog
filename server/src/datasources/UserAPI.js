@@ -14,21 +14,26 @@ class UserAPI extends DataSource {
   async createUser(args) {
     const { nickname, email, password } = args;
     const user = await this.store.User.create({ nickname, email, password: encrypt(password) });
-    const userData = { userId: user.id, nickname, email };
+    const userData = { id: user.id, nickname, email };
     return generateToken(userData);
+  }
+
+  async updateUser(args) {
+    const { id } = this.context.user;
+    await this.store.User.update({ avatarURL: args.location }, { where: { id } });
   }
 
   async loginUser(args) {
     const { email, password } = args;
     const userRecord = await this.store.User.findOne({ where: { email } });
     if (!userRecord) {
-      throw new Error('User not found');
+      throw new Error('No user found with this login credentials.');
     }
     const correctPassword = userRecord.verifyPassword(password);
     if (!correctPassword) {
-      throw new Error('Incorrect password');
+      throw new Error('Invalid password.');
     }
-    const userData = { userId: userRecord.id, nickname: userRecord.nickname, email };
+    const userData = { id: userRecord.id, nickname: userRecord.nickname, email };
     return generateToken(userData);
   }
 }

@@ -5,8 +5,10 @@ const pathToEnv = path.resolve(__dirname, '../../.env');
 
 dotenv.config({ path: pathToEnv });
 
-const dateLocales = 'ru-RU' || process.env.DATE_LOCALES;
+const allowedFileFormat = ['jpj', 'png'];
+const isAllowedFormat = (filename) => {
+  const extension = filename.split('.').pop();
+  return allowedFileFormat.includes(extension);
+};
 
-const getDate = (time) => time.toLocaleString(dateLocales);
-
-module.exports = { getDate };
+module.exports = { isAllowedFormat };

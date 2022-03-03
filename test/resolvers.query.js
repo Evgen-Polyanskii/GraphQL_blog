@@ -19,11 +19,6 @@ let context;
 let userData;
 let postsData;
 let commentsData;
-const dataSources = () => ({
-  postAPI: new PostAPI(db),
-  userAPI: new UserAPI(db),
-  commentAPI: new CommentAPI(db),
-});
 
 describe('Check query', () => {
   let user;
@@ -32,11 +27,17 @@ describe('Check query', () => {
     userData = getUser();
     postsData = [getPost(), getPost(), getPost()];
     commentsData = [getComment(), getComment(), getComment()];
-    context = { dataSources: dataSources() };
+    context = {
+      dataSources: {
+        postAPI: new PostAPI(db),
+        userAPI: new UserAPI(db),
+        commentAPI: new CommentAPI(db),
+      },
+    };
   });
 
   beforeEach(async () => {
-    await db.sequelize.sync({ force: true });
+    await db.sequelize.sync({ force: true, logging: false });
     user = await db.User.create({ ...userData, password: encrypt(userData.password) });
     context = setContext(context, user);
     await postsData.forEach((postData) => db.Post.create({ ...postData, author_id: user.id }));
@@ -60,7 +61,7 @@ describe('Check query', () => {
   });
 
   it('Check getUserComments', async () => {
-    const comments = await Query.getUserComments(null, { userId: 1, page: 2, perPage: 1 }, context);
+    const comments = await Query.getUserComments(null, { page: 2, perPage: 1 }, context);
     comments.comments.isArray; // eslint-disable-line chai-friendly/no-unused-expressions
     comments.totalPages.should.be.equal(3);
     comments.lastPage.should.be.false;

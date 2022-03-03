@@ -17,6 +17,9 @@ module.exports = (sequelize) => {
     body: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
     post_id: {
       type: DataTypes.INTEGER,

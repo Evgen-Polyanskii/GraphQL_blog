@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   class Post extends Model {
     static associate(models) {
       Post.belongsTo(models.User, { as: 'author', foreignKey: 'author_id' });
-      Post.hasMany(models.Comment, { as: 'comments', foreignKey: 'post_id' });
+      Post.hasMany(models.Comment, { as: 'comments', foreignKey: 'post_id', onDelete: 'CASCADE' });
     }
   }
   Post.init({
@@ -17,9 +17,12 @@ module.exports = (sequelize) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
     body: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     author_id: {
