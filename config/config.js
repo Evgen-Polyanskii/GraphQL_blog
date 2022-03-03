@@ -19,9 +19,9 @@ module.exports = {
     dialect: 'sqlite',
   },
   production: {
-    // username: process.env.DB_USERNAME,
-    // password: process.env.DB_PASSWORD,
-    // database: process.env.DB_NAME,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     connectionString: process.env.DATABASE_URL,
     ssl: {
       rejectUnauthorized: false,
