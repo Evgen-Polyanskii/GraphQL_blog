@@ -11,6 +11,10 @@
     "build": "npm run build-db && npm run db-migrate && npm run data-load",
     "start": "NODE_ENV=production node server/bin/server.js"
   },
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Evgen-Polyanskii/testTask_volt_blog.git"
@@ -44,7 +48,6 @@
     "graphql-resolvers": "^0.4.2",
     "graphql-scalars": "^1.14.1",
     "graphql-upload": "^13.0.0",
-    "ioredis": "^4.28.5",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
