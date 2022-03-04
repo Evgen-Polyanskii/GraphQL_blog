@@ -8,7 +8,7 @@
     "build-db": "npx sequelize-cli db:create",
     "db-migrate": "npx sequelize-cli db:migrate",
     "data-load": "npx sequelize-cli db:seed:all",
-    "build": "npm run build-db && npm run db-migrate && npm run data-load",
+    "build": "npm run db-migrate && npm run data-load",
     "start": "NODE_ENV=production && APOLLO_KEY=My-Graph-t9r8st node server/bin/server.js"
   },
   "engines": {
