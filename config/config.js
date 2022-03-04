@@ -20,7 +20,7 @@ module.exports = {
   },
   production: {
     username: process.env.DB_USERNAME,
-    connection: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL,
     useNullAsDefault: true,
     // password: process.env.DB_PASSWORD,
     // database: process.env.DB_NAME,
