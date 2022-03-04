@@ -19,6 +19,7 @@ module.exports = {
     dialect: 'sqlite',
   },
   production: {
+    port: process.env.DB_PORT || 32,
     connection: process.env.DATABASE_URL,
     useNullAsDefault: true,
     dialect: 'postgres',
