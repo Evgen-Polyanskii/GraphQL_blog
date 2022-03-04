@@ -22,9 +22,11 @@ module.exports = {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    connectionString: process.env.DATABASE_URL,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 5432,
     ssl: {
       rejectUnauthorized: false,
+      require: true,
     },
     dialect: 'postgres',
   },
