@@ -23,6 +23,7 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
+    connectionString: process.env.DATABASE_URL,
     port: process.env.DB_PORT || 5432,
     ssl: {
       rejectUnauthorized: false,
