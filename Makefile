@@ -1,5 +1,8 @@
 setup: install db-create db-migrate data-load
 
+start:
+	heroku local -f Procfile
+
 db-create:
 	npx sequelize-cli db:create
 
