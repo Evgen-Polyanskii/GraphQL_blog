@@ -19,17 +19,8 @@ module.exports = {
     dialect: 'sqlite',
   },
   production: {
-    username: process.env.DB_USERNAME,
-    connectionString: process.env.DATABASE_URL,
+    connection: process.env.DATABASE_URL,
     useNullAsDefault: true,
-    // password: process.env.DB_PASSWORD,
-    // database: process.env.DB_NAME,
-    // host: process.env.DB_HOST,
-    // port: process.env.DB_PORT || 5432,
-    // ssl: {
-    //   rejectUnauthorized: false,
-    //   require: true,
-    // },
     dialect: 'postgres',
   },
 };
