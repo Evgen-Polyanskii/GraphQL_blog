@@ -17,7 +17,7 @@ const { app, httpServer, server } = createServer();
 db.sequelize.sync({ alter: true, logging: false })
   .then(() => server.start())
   .then(() => server.applyMiddleware({ app, path: '/graphql' }))
-  .then(() => httpServer.listen({ host, port }, (err) => {
+  .then(() => httpServer.listen(port, host, (err) => {
     if (err) {
       console.log('Error', err);
     }
