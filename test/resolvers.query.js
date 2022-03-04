@@ -12,6 +12,7 @@ const db = require('../db/models');
 const { getUser, getPost, getComment } = require('../__fixtures__/entitiesData.js');
 const { encrypt } = require('../server/lib/secure.js');
 const setContext = require('../__fixtures__/utils.js');
+const { getAnalyticalReport } = require('../server/lib/getAnalyticalReport.js');
 
 const should = chai.should();
 
@@ -19,6 +20,7 @@ let context;
 let userData;
 let postsData;
 let commentsData;
+let startDate;
 
 describe('Check query', () => {
   let user;
@@ -34,6 +36,7 @@ describe('Check query', () => {
         commentAPI: new CommentAPI(db),
       },
     };
+    startDate = '2022-02-02';
   });
 
   beforeEach(async () => {
@@ -65,5 +68,20 @@ describe('Check query', () => {
     comments.comments.isArray; // eslint-disable-line chai-friendly/no-unused-expressions
     comments.totalPages.should.be.equal(3);
     comments.lastPage.should.be.false;
+  });
+
+  it('Check make Analytical Report', async () => {
+    const newUserData = getUser();
+    const newPost = getPost();
+    const newUser = await db.User.create({
+      ...newUserData, password: encrypt(newUserData.password),
+    });
+    await db.Post.create({ ...newPost, author_id: newUser.dataValues.id });
+    const endDate = new Date(Date.now());
+    const analyticalReport = await getAnalyticalReport(startDate, endDate);
+    analyticalReport.length.should.be.equal(2);
+    analyticalReport[0].countPosts.should.be.equal(3);
+    analyticalReport[0].countComments.should.be.equal(3);
+    analyticalReport[1].countPosts.should.be.equal(1);
   });
 });

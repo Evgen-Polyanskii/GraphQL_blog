@@ -2,7 +2,7 @@ const Queue = require('bull');
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 const path = require('path');
-const getAnalyticalReport = require('../lib/getAnalyticalReport.js');
+const { getAnalyticalReport, makeTable } = require('../lib/getAnalyticalReport.js');
 
 const pathToEnv = path.resolve(__dirname, '../../.env');
 dotenv.config({ path: pathToEnv });
@@ -27,12 +27,13 @@ sendAnalyticalReport.process(async (job) => {
   try {
     const { email, startDate, endDate } = job.data;
     const analyticalReport = await getAnalyticalReport(startDate, endDate);
+    const reportTable = makeTable(analyticalReport);
     const info = await transporter.sendMail(
       {
         from: process.env.TRANSPORTER_EMAIL,
         to: email,
         subject: 'Analytical report',
-        text: analyticalReport.toString(),
+        text: reportTable.toString(),
       },
     );
     console.log('Message sent: %s', info.messageId);

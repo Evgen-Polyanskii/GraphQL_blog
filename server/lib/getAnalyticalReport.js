@@ -24,16 +24,15 @@ const getAnalyticalReport = async (startDate, endDate) => {
     LEFT JOIN countPosts ON "author_id" = "id" LEFT JOIN countsComments ON "author_comment_id" = "id" 
     GROUP BY "id", "countPosts", "countComments";`, { type: QueryTypes.SELECT });
 
-    const sortedAnalyticalData = _.sortBy(data, (value) => {
+    return _.sortBy(data, (value) => {
       const posts = Number(value.countPosts) ?? 0;
       const comments = Number(value.countComments) ?? 0;
       return (-(posts + comments) / 10); //  Знака '-' необходим для сортировки по убыванию.
     });
-    return makeTable(sortedAnalyticalData);
   } catch (err) {
     console.log(err);
     throw err;
   }
 };
 
-module.exports = getAnalyticalReport;
+module.exports = { getAnalyticalReport, makeTable };
