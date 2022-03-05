@@ -14,7 +14,8 @@ const host = process.env.HOST || 'localhost';
 
 const { app, httpServer, server } = createServer();
 
-db.sequelize.sync({ alter: true, logging: false })
+db.sequelize.authenticate()
+  .then(() => db.sequelize.sync({ alter: true, logging: false }))
   .then(() => server.start())
   .then(() => server.applyMiddleware({ app, path: '/graphql' }))
   .then(() => httpServer.listen(port, host, (err) => {
