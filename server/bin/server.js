@@ -2,7 +2,7 @@
 
 const path = require('path');
 const dotenv = require('dotenv');
-const createServer = require('../index.js');
+const { createServer } = require('../index.js');
 const db = require('../../db/models');
 
 const pathToEnv = path.resolve(__dirname, '../.env');

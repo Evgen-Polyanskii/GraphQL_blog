@@ -1,5 +1,3 @@
-const { ForbiddenError } = require('apollo-server');
-const { skip } = require('graphql-resolvers');
 const crypto = require('crypto');
 const path = require('path');
 const jwt = require('jsonwebtoken');
@@ -30,8 +28,6 @@ const getUser = ({ req }) => {
   return null;
 };
 
-const isAuthenticated = (parent, args, { user }) => (user ? skip : new ForbiddenError('Not authenticated as user.'));
-
 module.exports = {
-  encrypt, generateToken, getUser, isAuthenticated,
+  encrypt, generateToken, getUser,
 };

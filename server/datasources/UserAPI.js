@@ -1,5 +1,5 @@
 const { DataSource } = require('apollo-datasource');
-const { encrypt, generateToken } = require('../../lib/secure.js');
+const { encrypt, generateToken } = require('../lib/secure.js');
 
 class UserAPI extends DataSource {
   constructor(store) {
