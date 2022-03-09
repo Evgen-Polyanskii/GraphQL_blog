@@ -1,5 +1,6 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+const { graphqlUploadExpress } = require('graphql-upload');
 const { typeDefs: scalarTypeDefs } = require('graphql-scalars');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const morgan = require('morgan');
@@ -30,6 +31,7 @@ const createServer = () => {
   const app = express();
   app.use(cors());
   app.use(logger);
+  app.use(graphqlUploadExpress());
   getRoutes(app);
   const httpServer = http.createServer(app);
 

@@ -26,5 +26,7 @@ dev:
 lint:
 	npx eslint .
 
-run-test:
+test:
 	npm test
+
+.PHONY: test
