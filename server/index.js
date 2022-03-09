@@ -2,7 +2,11 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const { graphqlUploadExpress } = require('graphql-upload');
 const { typeDefs: scalarTypeDefs } = require('graphql-scalars');
-const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+const {
+  ApolloServerPluginDrainHttpServer,
+  ApolloServerPluginLandingPageProductionDefault,
+  ApolloServerPluginLandingPageLocalDefault,
+} = require('apollo-server-core');
 const path = require('path');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
@@ -49,7 +53,15 @@ const createServer = () => {
     resolvers,
     dataSources,
     context,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [
+      process.env.NODE_ENV === 'production'
+        ? ApolloServerPluginLandingPageProductionDefault({
+          graphRef: 'voltblog-1tc1wn@current',
+          footer: false,
+        })
+        : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+    ],
   });
 
   return { app, httpServer, server };

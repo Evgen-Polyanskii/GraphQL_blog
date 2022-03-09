@@ -9,7 +9,7 @@ db.sequelize.authenticate()
   .then(() => db.sequelize.sync({ alter: true, logging: false }))
   .then(() => server.start())
   .then(() => server.applyMiddleware({ app, path: '/graphql' }))
-  .then(() => httpServer.listen(app.get('port'),(err) => {
+  .then(() => httpServer.listen(app.get('port'), (err) => {
     if (err) {
       console.log('Error', err);
     }
