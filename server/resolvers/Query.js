@@ -4,12 +4,11 @@ const validator = require('validator');
 const path = require('path');
 const dotenv = require('dotenv');
 const isAuthenticated = require('./authorization.js');
-const createAnalyticalReport = require('../services/queueSendEmail.js');
 
 const pathToEnv = path.resolve(__dirname, '../../.env');
 dotenv.config({ path: pathToEnv });
 
-const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
+const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 
 module.exports = {
   getPostById: combineResolvers(
@@ -41,7 +40,7 @@ module.exports = {
       if (!validator.isDate(startDate)) throw new Error('Invalid start date.');
       if (!validator.isDate(endDate)) throw new Error('Invalid end date.');
       const sendAnalyticalReport = new Queue('Send analytical report', REDIS_URL);
-      const jobId = await sendAnalyticalReport.add(args);
+      sendAnalyticalReport.add(args);
       return {
         message: 'Report generation started',
       };
