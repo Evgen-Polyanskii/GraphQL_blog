@@ -1,5 +1,9 @@
 # Тестовое задание Volt
 
+## Развернутая версия
+
+### [Volt-blog](https://volt-blog.herokuapp.com/graphql)
+
 ## Локальная установка
 
 ```

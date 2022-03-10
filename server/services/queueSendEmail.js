@@ -19,9 +19,10 @@ const transporter = nodemailer.createTransport({
 
 const sendAnalyticalReport = new Queue('Send analytical report', {
   redis: {
-    url: process.env.REDIS_URL,
-    secure: process.env.REDIS_TLS_URL || '',
-  },
+    port: process.env.REDIS_PORT,
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASSWORD
+  }
 });
 
 const createAnalyticalReport = (params) => {
