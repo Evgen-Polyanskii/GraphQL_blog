@@ -1,8 +1,5 @@
 setup: install db-create db-migrate data-load
 
-start:
-	heroku local -f Procfile
-
 db-create:
 	npx sequelize-cli db:create
 
@@ -20,8 +17,11 @@ db-reset: db-delete-migrate db-migrate data-load
 install:
 	npm install
 
-dev:
+start-server:
 	npx nodemon server/bin/server.js
+
+start:
+	heroku local -f Procfile.dev
 
 lint:
 	npx eslint .

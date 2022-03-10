@@ -47,5 +47,4 @@ const createAnalyticalReport = () => {
   });
 };
 
-// createAnalyticalReport();
 throng({ worker: createAnalyticalReport, count: workers });
