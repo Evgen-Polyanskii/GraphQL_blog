@@ -9,6 +9,7 @@ const pathToEnv = path.resolve(__dirname, '../../.env');
 dotenv.config({ path: pathToEnv });
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
+const REDIS_TLS_URL = process.env.REDIS_TLS_URL || '';
 
 module.exports = {
   getPostById: combineResolvers(
@@ -39,7 +40,12 @@ module.exports = {
       if (!validator.isEmail(email)) throw new Error('Invalid email address.');
       if (!validator.isDate(startDate)) throw new Error('Invalid start date.');
       if (!validator.isDate(endDate)) throw new Error('Invalid end date.');
-      const sendAnalyticalReport = new Queue('Send analytical report', REDIS_URL);
+      const sendAnalyticalReport = new Queue('Send analytical report', {
+        redis: {
+          url: REDIS_URL,
+          secure: REDIS_TLS_URL
+        }
+      });
       sendAnalyticalReport.add(args);
       return {
         message: 'Report generation started',
