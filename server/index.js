@@ -15,7 +15,6 @@ const http = require('http');
 const db = require('../db/models');
 const { getUser } = require('./lib/secure.js');
 
-const getRoutes = require('./routes/users.js');
 const PostAPI = require('./datasources/PostAPI.js');
 const UserAPI = require('./datasources/UserAPI.js');
 
@@ -45,7 +44,6 @@ const createServer = () => {
   app.use(cors());
   app.use(logger);
   app.use(graphqlUploadExpress());
-  getRoutes(app);
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer({
